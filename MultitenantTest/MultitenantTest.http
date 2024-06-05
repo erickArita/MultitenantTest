@@ -1,0 +1,27 @@
+@MultitenantTest_HostAddress = http://localhost:5296
+@Tenant=tenant1
+
+GET {{MultitenantTest_HostAddress}}/tenant/
+Accept: application/json
+###
+
+POST {{MultitenantTest_HostAddress}}/tenant?name=default2
+Content-Type: application/json
+Accept: application/json
+
+###
+POST {{MultitenantTest_HostAddress}}/products
+Content-Type: application/json
+Accept: application/json
+__tenant__: default2
+
+{
+  "name": "test1",
+  "description": "string",
+  "price": 0
+}
+
+###
+GET {{MultitenantTest_HostAddress}}/products
+Accept: application/json
+__tenant__: default
